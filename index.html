@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./views/favicon.ico" />
+    <link rel="bookmark"href="./views/favicon.ico"/>
+    <title>中特课程展示汇报</title>
+    <script src="./views/assets/js/echarts.min.js"></script>
+    <script src="./views/assets/js/jquery.js"></script>
+    <script src="./views/assets/js/dataTool.js"></script>
+    <script src="./data/frequencyData.js" charset="utf-8"></script>
+    <script src="./data/timelineData.js" charset="utf-8"></script>
+
+    <script src="./data/roaData.js" charset="utf-8"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+        .title {
+            padding: 20px 15px;
+            background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%);
+            border-radius: 100px;
+            color: #ffffff;
+            margin: 0 auto;
+            margin-top: 20px;
+            font-weight: 600;
+            width: 60%;
+            text-align: center;
+        }
+        .line {
+            position: relative;
+            width: calc(100% - 40px);
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+        .line .pic {
+            border: 3px solid #7367F0;
+            border-radius: 30px;
+            width: 45vw;
+            padding: 15px;
+            height: 25vw;
+        }
+        .bigLine {
+            position: relative;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 3px solid #7367F0;
+            border-radius: 30px;
+            width: 93vw;
+            padding: 20px;
+            height: 80vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">中特课程展示汇报（刘涛、刘峰、杨亚璇、李钟航、沈兆鑫）</div>
+    <!--<div class="line">-->
+        <!--<div class="pic" id="time_line2"></div>-->
+        <!--<div class="pic" id="time_line1"></div>-->
+    <!--</div>-->
+    <div class="bigLine" id="zhexian"></div>
+
+    <script>
+        // *******************  绘制方法 ******************
+        // 1.折线图
+        function drawZhexian() {
+            var myChart11 = echarts.init(document.getElementById('zhexian'));
+            option11 = {
+                title : {
+                    text: `3800家企业在4个时间节点ROA统计折线图`
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow',
+                        label: {
+                            show: true
+                        }
+                    }
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 120,
+                    bottom: 20,
+                    data:[ '2019-12-31', '2020-03-31','2020-06-30','2020-09-30'],
+                    itemGap: 10
+                },
+                grid: {
+                    top: '12%',
+                    left: '1%',
+                    right: '10%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type : 'category',
+                        data : roaData.xLine
+                    }
+                ],
+                yAxis: [
+                    {
+                        type : 'value',
+                        name : 'ROA'
+                    }
+                ],
+                dataZoom: [
+                    {
+                        show: true,
+                        minValueSpan: 3,
+                        startValue: 0,
+                        end: 3
+                    },
+                    {
+                        type: 'inside',
+                        minValueSpan: 3,
+                        startValue: 0,
+                        end: 3
+                    }
+                ],
+                series : [
+                    {
+                        name: '2019-12-31',
+                        type: 'bar',
+                        data: roaData.firstLine
+                    },
+                    {
+                        name: '2020-03-31',
+                        type: 'bar',
+                        data: roaData.secondLine
+                    },
+                    {
+                        name: '2020-06-30',
+                        type: 'bar',
+                        data: roaData.thirdLine
+                    },
+                    {
+                        name: '2020-09-30',
+                        type: 'bar',
+                        data: roaData.fourthLine
+                    }
+                ]
+            };
+
+            myChart11.setOption(option11);
+            window.addEventListener("resize",()=>{
+               myChart11.resize();
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        // *******************  绘制执行 ******************
+        var roaData = roaDataImport
+        // 1.折线图
+        drawZhexian()
+
+
+
+    </script>
+
+
+
+</body>
+</html>
